@@ -1,5 +1,5 @@
 ---
 
 # flask configuration
-application_path: "{{ project_path }}/{{ project_name }}"
+application_path: "{{ project_path }}/app"
 static_dir: "static"
