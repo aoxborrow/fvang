@@ -3,7 +3,19 @@ FVANG
 
 ### Flask-Vagrant-Ansible-Nginx-Gunicorn *Starter Pack*
 
-##### Getting started
+#### Features
+- self-contained, installs Ansible within the VM
+- easy to add more Ansible roles
+- activates virtualenv on login
+- installs packages from `requirements.txt`
+- starter playbooks for development and production
+- develop with debug server, then test with gunicorn/nginx
+- start gunicorn: `sudo supervisorctl start gunicorn`
+- start nginx: `sudo service nginx start`
+
+---- 
+
+#### Getting started
 
 0. Install [Vagrant](https://www.vagrantup.com/)
 
@@ -41,4 +53,4 @@ FVANG
     python app/app.py
     ```
 
-0. Profit :heavy_check_mark:
+0. **Profit** :heavy_check_mark:
