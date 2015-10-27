@@ -1,0 +1,25 @@
+---
+
+- name: Ensure bash, OpenSSl, and libssl are the latest versions
+  apt: name={{ item }} update_cache=yes state=latest
+  with_items:
+    - bash
+    - openssl
+    - libssl-dev
+    - libssl-doc
+
+- name: Install common server packages
+  apt: name={{ item }} update_cache=yes force=yes state=installed
+  with_items:
+    - build-essential
+    - htop
+    - vim
+    - git
+    - unzip
+    - curl
+
+- name: Use our custom .profile for bash
+  template: src=profile.j2
+            dest="{{ home_path }}/.profile"
+            backup=yes
+  sudo: no

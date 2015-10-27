@@ -1,0 +1,6 @@
+---
+
+# initial mysql database settings
+db_name: "{{ project_name }}"
+db_user: root
+db_pass: ""

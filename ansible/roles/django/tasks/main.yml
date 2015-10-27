@@ -1,0 +1,49 @@
+---
+
+- name: Check if settings_local.py already exists
+  stat: path={{ application_path }}/settings_local.py
+  register: settings_exists
+  when: settings_local
+
+- name: Install copy of settings_local.py if it doesn't exist
+  template: src={{ application_path }}/settings_local.py.dist
+            dest={{ application_path }}/settings_local.py
+  when: settings_local and settings_exists.stat.exists == False
+
+- name: Create the django log directory
+  file: path=/var/log/django state=directory owner={{ user_name }} group={{ user_name }} mode=0777
+
+- name: Create the cache table
+  django_manage: command=createcachetable
+                 app_path={{ application_path }}
+                 virtualenv={{ virtualenv_path }}
+                 settings={{ django_settings }}
+                 cache_table=django_cache
+  sudo: no
+
+- name: Run the Django migrate command
+  django_manage: command=migrate
+                 app_path={{ application_path }}
+                 virtualenv={{ virtualenv_path }}
+                 settings={{ django_settings }}
+  sudo: no
+  when: migrate
+
+- name: Load development fixture data
+  django_manage: command=loaddata
+                 app_path={{ application_path }}
+                 virtualenv={{ virtualenv_path }}
+                 settings={{ django_settings }}
+                 fixtures={{ application_path }}/fixtures/{{ item }}
+  with_items:
+    - 001_fixtures.json
+  sudo: no
+  when: load_fixtures
+
+- name: Run manage.py collectstatic
+  django_manage: command=collectstatic
+                 app_path={{ application_path }}
+                 virtualenv={{ virtualenv_path }}
+                 settings={{ django_settings }}
+  sudo: no
+  when: collectstatic

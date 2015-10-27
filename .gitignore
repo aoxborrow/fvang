@@ -1,0 +1,6 @@
+*.pyc
+.DS_Store
+.vagrant
+.coverage
+.idea
+gunicorn.conf

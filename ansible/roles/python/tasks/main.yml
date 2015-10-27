@@ -1,0 +1,28 @@
+---
+
+- name: Install common python packages
+  apt: name={{ item }} update_cache=yes force=yes state=installed
+  with_items:
+    - python-dev
+    - python-pip
+    - python-pycurl
+    - python-selinux
+    - libmysqlclient-dev
+
+- name: Delete all existing .pyc files
+  command: find . -name '*.pyc' -delete
+  args:
+    chdir: "{{ project_path }}"
+
+- name: Install virtualenv (latest from pip)
+  pip: name=virtualenv
+
+- name: Create the virtualenv
+  command: virtualenv {{ virtualenv_path }}
+           creates={{ virtualenv_path }}/bin/activate
+  sudo: no
+
+- name: Install packages required by the python application inside virtualenv
+  pip: virtualenv={{ virtualenv_path }} requirements={{ requirements_file }}
+  sudo: no
+

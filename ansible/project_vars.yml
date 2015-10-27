@@ -1,0 +1,12 @@
+---
+
+# project and host name
+project_name: "fvang"
+host_name: "fvang.local"
+
+# the "remote" user, or main system user
+user_name: "{{ ansible_ssh_user }}"
+
+# project paths
+home_path: "/home/{{ user_name }}"
+project_path: "{{ home_path }}/{{ project_name }}"

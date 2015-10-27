@@ -1,0 +1,6 @@
+---
+
+# django configuration
+application_path: "{{ project_path }}/{{ project_name }}"
+django_settings: "settings"
+static_dir: "assets"

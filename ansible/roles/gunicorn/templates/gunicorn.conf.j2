@@ -1,0 +1,6 @@
+bind = "127.0.0.1:8000"
+errorlog = '/var/log/gunicorn/{{ project_name }}-error.log'
+accesslog = '/var/log/gunicorn/{{ project_name }}-access.log'
+loglevel = 'warning'
+workers = 5
+timeout = 180

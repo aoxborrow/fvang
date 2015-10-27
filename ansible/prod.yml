@@ -1,0 +1,19 @@
+---
+
+- name: Configuration for AWS Production
+  hosts: localhost
+  sudo: yes
+  # remote_user: ubuntu
+
+  vars_files:
+    - project_vars.yml
+
+  roles:
+    - common
+    - ntp
+    - python
+    # - mysql
+    - { role: django, settings_local: false, migrate: false, load_fixtures: false, collectstatic: true }
+    - { role: gunicorn, autostart: true, enabled: true }
+    - { role: nginx, use_ssl: true, enabled: true }
+    # - { role: browser, autostart: false }

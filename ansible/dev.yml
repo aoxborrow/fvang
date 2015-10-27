@@ -1,0 +1,24 @@
+---
+
+- name: Configuration for local development on Vagrant VM
+  hosts: localhost
+  sudo: yes
+  # remote_user: vagrant
+
+  vars_files:
+    - project_vars.yml
+
+  roles:
+    - common
+    - ntp
+    - python
+    # - mysql
+    - flask
+    # - { role: django, settings_local: true, migrate: true, load_fixtures: true, collectstatic: false }
+    - { role: gunicorn, autostart: false, enabled: false }
+    - { role: nginx, use_ssl: false, enabled: false }
+    # - { role: browser, autostart: true }
+
+  tasks:
+    - name: Allow venv/bin/python to bind port 80
+      command: setcap cap_net_bind_service=ep {{ home_path }}/venv/bin/python
