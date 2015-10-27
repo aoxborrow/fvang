@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 from flask import Flask
 application = Flask(__name__)
 
