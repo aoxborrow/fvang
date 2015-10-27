@@ -31,15 +31,10 @@ FVANG
     pass: vagrant
     ```
 
-0. Start development server:
+0. Start Flask development server:
     ```sh
-    ### FLASK ###
     cd ~/fvang
     python fvang/app.py
-
-    ### DJANGO ###
-    cd ~/fvang
-    python fvang/manage.py runserver 0.0.0.0:80
     ```
 
 0. Profit :heavy_check_mark:

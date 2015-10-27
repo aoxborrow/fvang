@@ -1,16 +1,6 @@
 gunicorn==19.3.0
-
-# FLASK
 Flask==0.10.1
 itsdangerous==0.24
 Jinja2==2.8
 MarkupSafe==0.23
 Werkzeug==0.10.4
-
-# DJANGO
-# Django==1.8.5
-# MySQL-python==1.2.5
-
-# BROWSER TESTING
-# selenium==2.45.0
-# xvfbwrapper==0.2.5

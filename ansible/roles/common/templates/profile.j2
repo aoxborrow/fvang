@@ -23,8 +23,3 @@ fi
 
 # activate virtualenv
 . "$HOME/venv/bin/activate"
-
-if [[ -z "$DISPLAY" ]] && [[ $(tty) = /dev/tty1 ]] && [[ ! -e "/tmp/.X0-lock" ]]; then
- startx
-fi
-
