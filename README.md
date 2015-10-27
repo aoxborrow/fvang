@@ -9,8 +9,7 @@ FVANG
 - easy to add more Ansible roles
 - activates virtualenv on login
 - installs packages from `requirements.txt`
-- develop with debug server, then test with gunicorn/nginx
-
+- develop with debug server, then test/deploy with gunicorn/nginx
 - start gunicorn: `sudo supervisorctl start gunicorn`
 - start nginx: `sudo service nginx start`
 
