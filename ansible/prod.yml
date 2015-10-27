@@ -1,12 +1,9 @@
 ---
 
 - name: Configuration for AWS Production
-  hosts: localhost
+  hosts: all
   sudo: yes
   # remote_user: ubuntu
-
-  vars_files:
-    - project_vars.yml
 
   roles:
     - common
