@@ -1,13 +1,15 @@
-FVANG - Flask-Vagrant-Ansible-Nginx-Gunicorn Starter Pack
+FVANG
 =======
 
-## Vagrant development environment ##
+### Flask-Vagrant-Ansible-Nginx-Gunicorn *Starter Pack*
+
+##### Getting started
 
 0. Install [Vagrant](https://www.vagrantup.com/)
 
 0. Clone this repo to your project folder
 
-0. Modify your local ```/etc/hosts``` to include these entries:
+0. Modify your local ```/etc/hosts``` to include this entry:
 
     ```
     192.168.33.11   fvang.local
