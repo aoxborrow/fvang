@@ -5,11 +5,12 @@ FVANG
 
 #### Features
 - self-contained, installs Ansible within the VM
+- playbooks for development and production
 - easy to add more Ansible roles
 - activates virtualenv on login
 - installs packages from `requirements.txt`
-- starter playbooks for development and production
 - develop with debug server, then test with gunicorn/nginx
+
 - start gunicorn: `sudo supervisorctl start gunicorn`
 - start nginx: `sudo service nginx start`
 
