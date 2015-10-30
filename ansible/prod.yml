@@ -10,4 +10,4 @@
     - python
     - flask
     - { role: gunicorn, autostart: true, enabled: true }
-    - { role: nginx, use_ssl: true, enabled: true }
+    - { role: nginx, use_ssl: false, enabled: true }
