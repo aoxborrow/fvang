@@ -19,9 +19,8 @@
 - name: Create the virtualenv
   command: virtualenv {{ virtualenv_path }}
            creates={{ virtualenv_path }}/bin/activate
-  sudo: no
+  become: no
 
 - name: Install packages from requirements.txt inside virtualenv
   pip: virtualenv={{ virtualenv_path }} requirements={{ requirements_file }}
-  sudo: no
-
+  become: no

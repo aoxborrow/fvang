@@ -24,8 +24,8 @@ server {
   keepalive_timeout 5;
 
   # nginx should serve up static files and never send to the WSGI server
-  location /{{ static_dir }} {
-    alias {{ project_path }}/{{ static_dir }};
+  location /static {
+    alias {{ project_path }}/static;
   }
 
   location / {

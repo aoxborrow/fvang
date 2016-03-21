@@ -2,12 +2,13 @@
 
 - name: Configuration for AWS Production
   hosts: all
-  sudo: yes
+  become: yes
+  vars:
+    user_name: "ubuntu"
 
   roles:
     - common
     - ntp
     - python
-    - flask
     - { role: gunicorn, autostart: true, enabled: true }
     - { role: nginx, use_ssl: false, enabled: true }

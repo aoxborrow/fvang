@@ -13,15 +13,15 @@ FVANG
 - start gunicorn: `sudo supervisorctl start gunicorn`
 - start nginx: `sudo service nginx start`
 
----- 
+----
 
 #### Getting started
 
 0. Install [Vagrant](https://www.vagrantup.com/)
 
-0. Clone this repo as your project name:
+0. Clone this repo:
     ```
-    git clone git@github.com:paste/fvang.git NEW-PROJECT-NAME
+    git clone git@github.com:paste/fvang.git
     ```
 
 0. Configure project name and host name in `ansible/roles/common/vars/main.yml`:
@@ -49,8 +49,8 @@ FVANG
 
 0. Start Flask development server:
     ```sh
-    cd ~/fvang
-    python app/app.py
+    cd fvang
+    python fvang/app.py
     ```
 
 0. **Profit** :heavy_check_mark:

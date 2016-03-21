@@ -18,13 +18,10 @@
   when: not use_ssl
 
 - name: Ensure that the default site is removed
-  command: rm /etc/nginx/sites-enabled/default
-           removes=/etc/nginx/sites-enabled/default
+  file: path=/etc/nginx/sites-enabled/default state=absent
 
 - name: Ensure that the application site is enabled
-  command: ln -s /etc/nginx/sites-available/{{ project_name }}
-           /etc/nginx/sites-enabled/{{ project_name }}
-           creates=/etc/nginx/sites-enabled/{{ project_name }}
+  file: src=/etc/nginx/sites-available/{{ project_name }} dest=/etc/nginx/sites-enabled/{{ project_name }} state=link
   notify: reload nginx
 
 - name: Ensure Nginx service is started, enable service on restart

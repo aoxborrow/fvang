@@ -22,4 +22,4 @@
   template: src=profile.j2
             dest="{{ home_path }}/.profile"
             backup=yes
-  sudo: no
+  become: no
