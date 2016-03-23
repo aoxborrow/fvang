@@ -1,11 +1,11 @@
 ---
 
 # project and host name
-project_name: "fvang"
-host_name: "fvang.local"
+project_name: fvang
+host_name: fvang.local
 
 # project paths
-home_path: "/home/{{ user_name }}"
+home_path: /home/{{ user_name }}
 project_path: "{{ home_path }}/{{ project_name }}"
 
 # flask app

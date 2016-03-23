@@ -1,4 +1,4 @@
 ---
 
-virtualenv_path: "{{ home_path}}/venv"
+virtualenv_path: "{{ home_path }}/venv"
 requirements_file: "{{ project_path }}/requirements.txt"

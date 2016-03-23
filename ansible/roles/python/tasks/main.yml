@@ -17,8 +17,7 @@
   pip: name=virtualenv
 
 - name: Create the virtualenv
-  command: virtualenv {{ virtualenv_path }}
-           creates={{ virtualenv_path }}/bin/activate
+  command: virtualenv {{ virtualenv_path }} creates={{ virtualenv_path }}/bin/activate
   become: no
 
 - name: Install packages from requirements.txt inside virtualenv

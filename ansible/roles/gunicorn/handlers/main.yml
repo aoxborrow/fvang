@@ -1,5 +1,5 @@
-- name: restart gunicorn
-  supervisorctl: name=gunicorn state=restarted
+- name: Restart Gunicorn
+  supervisorctl: name={{ project_name }} state=restarted
 
-- name: stop gunicorn
-  supervisorctl: name=gunicorn state=stopped
+- name: Stop Gunicorn
+  supervisorctl: name={{ project_name }} state=stopped

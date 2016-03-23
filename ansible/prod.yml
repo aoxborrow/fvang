@@ -1,6 +1,6 @@
 ---
 
-- name: Configuration for AWS Production
+- name: Configuration for Production
   hosts: all
   become: yes
   vars:
@@ -8,7 +8,6 @@
 
   roles:
     - common
-    - ntp
     - python
     - { role: gunicorn, autostart: true, enabled: true }
     - { role: nginx, use_ssl: false, enabled: true }

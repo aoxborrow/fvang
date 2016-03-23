@@ -6,15 +6,11 @@
     - nginx
 
 - name: Create the Nginx configuration file for SSL
-  template: src=site_ssl.conf.j2
-            dest=/etc/nginx/sites-available/{{ project_name }}
-            backup=yes
+  template: src=site_ssl.conf.j2 dest=/etc/nginx/sites-available/{{ project_name }}
   when: use_ssl
 
 - name: Create the Nginx configuration file (non-SSL)
-  template: src=site.conf.j2
-            dest=/etc/nginx/sites-available/{{ project_name }}
-            backup=yes
+  template: src=site.conf.j2 dest=/etc/nginx/sites-available/{{ project_name }}
   when: not use_ssl
 
 - name: Ensure that the default site is removed
@@ -29,7 +25,7 @@
   when: enabled
 
 # needs to notify handler to come after the restart handlers
-- name: Stop nginx for local dev, disable on restart
+- name: Stop nginx for local dev, disable service
   service: name=nginx state=stopped enabled=no
   notify: stop nginx
   when: not enabled

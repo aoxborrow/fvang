@@ -1,7 +1,7 @@
 import multiprocessing
 
 workers = multiprocessing.cpu_count() * 2 + 1
-proc_name = 'gunicorn'
+proc_name = '{{ project_name }}'
 bind = "127.0.0.1:8000"
 errorlog = '/var/log/gunicorn/{{ project_name }}-error.log'
 accesslog = '/var/log/gunicorn/{{ project_name }}-access.log'

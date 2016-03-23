@@ -3,4 +3,3 @@
 .vagrant
 .coverage
 .idea
-gunicorn.conf

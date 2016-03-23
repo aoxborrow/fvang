@@ -18,8 +18,6 @@
     - unzip
     - curl
 
-- name: Use our custom .profile for bash
-  template: src=profile.j2
-            dest="{{ home_path }}/.profile"
-            backup=yes
+- name: Use our custom .profile for bash, which activates virtualenv
+  template: src=profile.j2 dest={{ home_path }}/.profile
   become: no
