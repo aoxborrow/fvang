@@ -92,19 +92,10 @@ This is a starter pack for quickly developing a new Flask project locally with V
 
 0. Clone your repo onto the server into your user's home folder, e.g. `/home/ubuntu/fvang`. You will probably need to install and configure your Git client to do this.
 
-0. Run the Ansible provisioning script for production. It will install Ansible and run the production playbook:
+0. Run the Ansible production playbook. It will install Ansible and provision the server, automatically starting Gunicorn and NGINX:
     ```sh
     cd fvang
     ansible/provision.sh prod.yml
     ```
 
-0. Start Gunicorn:
-    ```sh
-    sudo supervisorctl start fvang
-    ```
-
-0. Start NGINX:
-    ```sh
-    sudo service nginx start
-    ```
 0. **Profit** :heavy_check_mark:
