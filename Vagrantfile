@@ -12,9 +12,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.ssh.insert_key = false
   config.vm.synced_folder ".", "/home/vagrant/fvang", type: "nfs"
 
-  # this undoes the virtualenv for vagrant commands (ie. provision)
-  config.ssh.shell = "bash -c 'BASH_ENV=/etc/profile exec bash'"
-
   # temporary hack until Vagrant 1.8.2:
   # https://github.com/mitchellh/vagrant/issues/6793
   config.vm.provision :shell, inline: <<SCRIPT
