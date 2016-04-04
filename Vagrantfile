@@ -4,6 +4,8 @@
 VAGRANTFILE_API_VERSION = "2"
 VAGRANT_IP = "192.168.33.11"
 
+Vagrant.require_version ">= 1.8"
+
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.box = "bento/ubuntu-14.04"
   config.vm.network :private_network, ip: VAGRANT_IP
