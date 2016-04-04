@@ -9,7 +9,7 @@
     - libssl-doc
 
 - name: Install common server packages
-  apt: name={{ item }} update_cache=yes force=yes state=installed
+  apt: name={{ item }} state=installed
   with_items:
     - build-essential
     - htop

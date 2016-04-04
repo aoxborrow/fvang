@@ -4,7 +4,7 @@ FVANG
 ### Flask-Vagrant-Ansible-Nginx-Gunicorn *Starter Pack*
 
 #### Description
-This is a starter pack for quickly developing a new Flask project locally with Vagrant, which is then easily deployed into production via EC2/DigitalOcean/etc. It is based on a stock Ubuntu 14.04 base image, and uses Ansible to install and configure the basic services you'll need:
+This is a starter pack for quickly developing a new Flask project locally with Vagrant, which is then easily deployed onto production. It is based on a stock Ubuntu 14.04 base image, and uses Ansible to install and configure the basic services you'll need:
  - A Python virtualenv to house your Flask application and its dependencies
  - Gunicorn to serve your Flask application
  - NGINX to serve static files and proxy to Gunicorn
@@ -24,7 +24,7 @@ This is a starter pack for quickly developing a new Flask project locally with V
 
 #### Quick start, developing locally
 
-0. Install [Vagrant](https://www.vagrantup.com/)
+0. Install [Vagrant](https://www.vagrantup.com/) (Requires 1.8+)
 
 0. Clone this repo:
     ```
@@ -92,10 +92,14 @@ This is a starter pack for quickly developing a new Flask project locally with V
 
 0. Clone your repo onto the server into your user's home folder, e.g. `/home/ubuntu/fvang`. You will probably need to install and configure your Git client to do this.
 
-0. Run the Ansible production playbook. It will install Ansible and provision the server, automatically starting Gunicorn and NGINX:
+0. Install Ansible or try the included Ansible install script:
     ```sh
-    cd fvang
-    ansible/provision.sh prod.yml
+    ansible/install.sh
+    ```
+
+0. Run the Ansible production playbook. It will automatically start Gunicorn and NGINX:
+    ```sh
+    ansible-playbook -c local ansible/prod.yml
     ```
 
 0. **Profit** :heavy_check_mark:

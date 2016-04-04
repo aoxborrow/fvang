@@ -1,7 +1,7 @@
 ---
 
 - name: Install common python packages
-  apt: name={{ item }} update_cache=yes force=yes state=installed
+  apt: name={{ item }} state=latest
   with_items:
     - python-dev
     - python-pip
@@ -12,6 +12,7 @@
   command: find . -name '*.pyc' -delete
   args:
     chdir: "{{ project_path }}"
+  changed_when: false
 
 - name: Install virtualenv (latest from pip)
   pip: name=virtualenv

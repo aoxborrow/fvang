@@ -9,11 +9,28 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.network :private_network, ip: VAGRANT_IP
   config.ssh.insert_key = false
   config.vm.synced_folder ".", "/home/vagrant/fvang", type: "nfs"
-  config.vm.provision "shell" do |s|
-      s.inline = "/home/vagrant/fvang/ansible/provision.sh dev.yml"
-      s.keep_color = true
-      s.privileged = false
+
+  # this undoes the virtualenv for vagrant commands (ie. provision)
+  config.ssh.shell = "bash -c 'BASH_ENV=/etc/profile exec bash'"
+
+  # temporary hack until Vagrant 1.8.2:
+  # https://github.com/mitchellh/vagrant/issues/6793
+  config.vm.provision :shell, inline: <<SCRIPT
+GALAXY=/usr/local/bin/ansible-galaxy
+echo '#!/bin/sh
+exit 0' | sudo tee $GALAXY > /dev/null
+sudo chmod 0755 $GALAXY
+SCRIPT
+
+  # install Ansible within the VM and run our dev playbook
+  config.vm.provision "ansible_local" do |ansible|
+    ansible.install = true
+    ansible.provisioning_path = "/home/vagrant/fvang/ansible"
+    ansible.playbook = "dev.yml"
   end
+
+  # add localhost to Ansible inventory
+  config.vm.provision "shell", inline: "printf 'localhost\n' | sudo tee /etc/ansible/hosts > /dev/null"
 
   config.vm.provider "vmware_fusion" do |vf|
     vf.gui = true

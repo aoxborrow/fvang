@@ -3,3 +3,4 @@
 .vagrant
 .coverage
 .idea
+ansible/*.retry
