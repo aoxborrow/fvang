@@ -17,7 +17,7 @@ This is a starter pack for quickly developing a new Flask project locally with V
 - easy to add more Ansible roles, e.g. PostgreSQL, MySQL, Redis, etc.
 - activates virtualenv on login
 - installs packages from `requirements.txt`
-- start Gunicorn: `sudo supervisorctl start fvang`
+- start Gunicorn: `sudo supervisorctl start gunicorn`
 - start NGINX: `sudo service nginx start`
 
 ----
