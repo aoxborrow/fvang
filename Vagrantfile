@@ -16,7 +16,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # https://github.com/mitchellh/vagrant/issues/6793
   config.vm.provision :shell, inline: <<SCRIPT
 GALAXY=/usr/local/bin/ansible-galaxy
-echo '#!/bin/sh
+echo '#!/usr/bin/env bash
+/usr/bin/ansible-galaxy "$@"
 exit 0' | sudo tee $GALAXY > /dev/null
 sudo chmod 0755 $GALAXY
 SCRIPT

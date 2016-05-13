@@ -13,6 +13,6 @@
     - { role: nginx, use_ssl: false, enabled: false }
 
   tasks:
-    - name: Allow venv/bin/python to bind port 80
+    - name: Allow virtualenv python to bind port 80
       command: setcap cap_net_bind_service=ep {{ home_path }}/venv/bin/python
       changed_when: false

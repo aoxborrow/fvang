@@ -62,22 +62,27 @@ This is a starter pack for quickly developing a new Flask project locally with V
 
 0. Clone this repo as your project name:
     ```sh
-    git clone git@github.com:paste/fvang.git NEW-PROJECT-NAME
+    git clone git@github.com:paste/fvang.git new-project-name
     ```
 
-0. Configure project name and host name in `ansible/roles/common/vars/main.yml`:
-    ```yaml
-    project_name: NEW-PROJECT-NAME
-    host_name: NEW-PROJECT-NAME.local
-    ```
 0. Rename the app folder:
-    ```js
-    fvang -> NEW-PROJECT-NAME
+    ```
+    fvang -> new-project-name
     ```
 
 0. Replace any mentions of `fvang` in `Vagrantfile`:
     ```
-    /home/vagrant/NEW-PROJECT-NAME
+    /home/vagrant/new-project-name
+    ```
+
+0. Configure project name in `ansible/roles/common/vars/main.yml`:
+    ```yaml
+    project_name: new-project-name
+    ```
+
+0. Configure host name in `ansible/roles/nginx/vars/main.yml`:
+    ```yaml
+    host_name: new-project-name.party
     ```
 
 0. Build your new Vagrant VM:
