@@ -4,23 +4,13 @@
 VAGRANTFILE_API_VERSION = "2"
 VAGRANT_IP = "192.168.33.11"
 
-Vagrant.require_version ">= 1.8"
+Vagrant.require_version ">= 1.8.2"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.box = "bento/ubuntu-14.04"
   config.vm.network :private_network, ip: VAGRANT_IP
   config.ssh.insert_key = false
   config.vm.synced_folder ".", "/home/vagrant/fvang", type: "nfs"
-
-  # temporary hack until Vagrant 1.8.2:
-  # https://github.com/mitchellh/vagrant/issues/6793
-  config.vm.provision :shell, inline: <<SCRIPT
-GALAXY=/usr/local/bin/ansible-galaxy
-echo '#!/usr/bin/env bash
-/usr/bin/ansible-galaxy "$@"
-exit 0' | sudo tee $GALAXY > /dev/null
-sudo chmod 0755 $GALAXY
-SCRIPT
 
   # install Ansible within the VM and run our dev playbook
   config.vm.provision "ansible_local" do |ansible|

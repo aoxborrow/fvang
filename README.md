@@ -24,7 +24,7 @@ This is a starter pack for quickly developing a new Flask project locally with V
 
 #### Quick start, developing locally
 
-0. Install [Vagrant](https://www.vagrantup.com/) ***(Requires 1.8+)***
+0. Install [Vagrant](https://www.vagrantup.com/) ***(Requires 1.8.2+)***
 
 0. Clone this repo:
     ```
