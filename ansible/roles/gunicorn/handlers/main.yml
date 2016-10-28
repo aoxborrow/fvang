@@ -1,5 +1,0 @@
-- name: Restart Gunicorn
-  supervisorctl: name=gunicorn state=restarted
-
-- name: Stop Gunicorn
-  supervisorctl: name=gunicorn state=stopped

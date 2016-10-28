@@ -1,19 +1,18 @@
 ---
 
-
 - name: Install Supervisor
   apt: name={{ item }} state=installed
   with_items:
     - supervisor
 
 - name: Create the Gunicorn config directory
-  file: path=/etc/gunicorn state=directory owner={{ user_name }} group={{ user_name }} mode=0777
+  file: path=/etc/gunicorn state=directory owner={{ user_name }} group={{ user_name }} mode=0700
 
 - name: Create the Gunicorn config file in /etc/gunicorn/
   template: src=gunicorn.conf.j2 dest=/etc/gunicorn/gunicorn.conf
 
 - name: Create the Gunicorn log directory
-  file: path=/var/log/gunicorn state=directory owner={{ user_name }} group={{ user_name }} mode=0777
+  file: path=/var/log/gunicorn state=directory owner={{ user_name }} group={{ user_name }} mode=0700
 
 - name: Create the Supervisor config file for Gunicorn
   template: src=supervisor.conf.j2 dest=/etc/supervisor/conf.d/gunicorn.conf

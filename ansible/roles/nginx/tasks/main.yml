@@ -1,6 +1,6 @@
 ---
 
-- name: Install nginx
+- name: Install Nginx
   apt: name={{ item }} state=installed
   with_items:
     - nginx
@@ -18,7 +18,7 @@
 
 - name: Ensure that the application site is enabled
   file: src=/etc/nginx/sites-available/{{ project_name }} dest=/etc/nginx/sites-enabled/{{ project_name }} state=link
-  notify: reload nginx
+  notify: Reload Nginx
 
 - name: Ensure Nginx service is started, enable service on restart
   service: name=nginx state=restarted enabled=yes
@@ -27,5 +27,5 @@
 # needs to notify handler to come after the restart handlers
 - name: Stop nginx for local dev, disable service
   service: name=nginx state=stopped enabled=no
-  notify: stop nginx
+  notify: Stop Nginx
   when: not enabled

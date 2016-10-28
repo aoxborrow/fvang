@@ -14,5 +14,5 @@
 
   tasks:
     - name: Allow virtualenv python to bind port 80
-      command: setcap cap_net_bind_service=ep {{ home_path }}/venv/bin/python
+      command: setcap cap_net_bind_service=ep {{ virtualenv_path }}/bin/python
       changed_when: false
