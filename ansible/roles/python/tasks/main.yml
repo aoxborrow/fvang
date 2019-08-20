@@ -7,7 +7,6 @@
       - python3-pip
       - python3-cffi
       - python3-venv
-      - python-dev
     state: latest
 
 - name: Create the virtualenv
