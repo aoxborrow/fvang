@@ -1,18 +1,16 @@
 ---
 
-- name: Configuration for local development on Vagrant VM
+- name: Playbook for local development
   hosts: all
   become: yes
+
   vars:
-    user_name: "vagrant"
+
+    # project name, e.g. fvang
+    project_name: "{{ playbook_dir | dirname | basename }}"
+
+    # host name where site will be served, e.g. fvang.local
+    host_name: "{{ project_name }}.local"
 
   roles:
-    - common
-    - python
-    - { role: gunicorn, autostart: false, enabled: false }
-    - { role: nginx, use_ssl: false, enabled: false }
-
-  tasks:
-    - name: Allow virtualenv python to bind port 80
-      command: setcap cap_net_bind_service=ep {{ virtualenv_path }}/bin/python
-      changed_when: false
+    - project

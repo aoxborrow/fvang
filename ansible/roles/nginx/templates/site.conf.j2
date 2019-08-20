@@ -1,30 +1,13 @@
-upstream appserver {
-  server localhost:8000 fail_timeout=0;
+# define gunicorn app server
+upstream app_server {
+    server 127.0.0.1:8000 fail_timeout=0;
 }
 
+# config for non-SSL (local testing with NGINX)
 server {
-  listen 80;
-  server_name {{ host_name }};
+    listen 80 deferred default_server;
+    server_name {{ host_name }};
 
-  access_log /var/log/nginx/{{ project_name }}.access.log;
-  error_log /var/log/nginx/{{ project_name }}.error.log info;
-
-  keepalive_timeout 5;
-
-  # nginx should serve up static files and never send to the WSGI server
-  location /static {
-    alias {{ project_path }}/static;
-  }
-
-  location / {
-    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-    proxy_set_header Host $http_host;
-    proxy_redirect off;
-    proxy_read_timeout 180s;
-
-    if (!-f $request_filename) {
-      proxy_pass http://appserver;
-      break;
-    }
-  }
+    # include common config
+    include /etc/nginx/includes/site_common.conf;
 }

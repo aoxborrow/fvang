@@ -5,5 +5,5 @@ environment=PATH="{{ virtualenv_path }}/bin"
 user={{ user_name }}
 group={{ user_name }}
 autorestart=true
-autostart={{ autostart | bool | lower }}
+autostart={{ gunicorn_enabled | bool | lower }}
 redirect_stderr=true

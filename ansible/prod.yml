@@ -1,13 +1,25 @@
 ---
 
-- name: Configuration for Production
+- name: Playbook for production
   hosts: all
   become: yes
+
   vars:
-    user_name: "ubuntu"
+    # project name, e.g. fvang
+    project_name: "{{ playbook_dir | dirname | basename }}"
+
+    # host name where site will be served, e.g. fvang.io
+    host_name: "{{ project_name }}.io"
+
+    # linux user who will own project files in home folder
+    user_name: "{{ ansible_user }}"
+
+    # production gunicorn
+    gunicorn_enabled: true
+
+    # production nginx
+    nginx_use_ssl: false
+    nginx_enabled: true
 
   roles:
-    - common
-    - python
-    - { role: gunicorn, autostart: true, enabled: true }
-    - { role: nginx, use_ssl: false, enabled: true }
+    - project

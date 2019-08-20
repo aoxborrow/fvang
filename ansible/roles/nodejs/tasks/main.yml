@@ -1,0 +1,10 @@
+---
+
+- import_role:
+    name: geerlingguy.nodejs
+
+- name: Install local NPM packages based on package.json
+  npm:
+    path: "{{ project_path }}"
+    state: latest
+  become: no

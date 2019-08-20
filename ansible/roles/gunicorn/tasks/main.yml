@@ -1,9 +1,10 @@
 ---
 
 - name: Install Supervisor
-  apt: name={{ item }} state=installed
-  with_items:
-    - supervisor
+  apt:
+    name:
+      - supervisor
+    state: present
 
 - name: Create the Gunicorn config directory
   file: path=/etc/gunicorn state=directory owner={{ user_name }} group={{ user_name }} mode=0700
@@ -11,7 +12,7 @@
 - name: Create the Gunicorn config file in /etc/gunicorn/
   template: src=gunicorn.conf.j2 dest=/etc/gunicorn/gunicorn.conf
 
-- name: Create the Gunicorn log directory
+- name: Create the gunicorn log directory
   file: path=/var/log/gunicorn state=directory owner={{ user_name }} group={{ user_name }} mode=0700
 
 - name: Create the Supervisor config file for Gunicorn
@@ -20,10 +21,10 @@
 - name: Re-read the Supervisor config files
   supervisorctl: name=gunicorn state=present
 
-- name: Start Gunicorn with supervisord
+- name: Start gunicorn with supervisord
   supervisorctl: name=gunicorn state=restarted
-  when: enabled
+  when: gunicorn_enabled|bool
 
-- name: Stop Gunicorn for local dev
+- name: Stop gunicorn for local dev
   supervisorctl: name=gunicorn state=stopped
-  when: not enabled
+  when: not gunicorn_enabled|bool

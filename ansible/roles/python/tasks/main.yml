@@ -1,24 +1,17 @@
 ---
 
 - name: Install common python packages
-  apt: name={{ item }} state=latest
-  with_items:
-    - python-dev
-    - python-pip
-    - python-pycurl
-    - python-selinux
-
-- name: Delete all existing .pyc files
-  command: find . -name '*.pyc' -delete
-  args:
-    chdir: "{{ project_path }}"
-  changed_when: false
-
-- name: Install virtualenv (latest from pip)
-  pip: name=virtualenv
+  apt:
+    name:
+      - python3-dev
+      - python3-pip
+      - python3-cffi
+      - python3-venv
+      - python-dev
+    state: latest
 
 - name: Create the virtualenv
-  command: virtualenv {{ virtualenv_path }} creates={{ virtualenv_path }}/bin/activate
+  command: "{{ ansible_python_interpreter }} -m venv {{ virtualenv_path }} creates={{ virtualenv_path }}/bin/activate"
   become: no
 
 - name: Install packages from requirements.txt inside virtualenv
@@ -26,5 +19,13 @@
   become: no
 
 - name: Activate virtualenv on login
-  lineinfile: dest=~/.bashrc line='. {{ virtualenv_path }}/bin/activate'
+  lineinfile: dest={{ home_path }}/.bashrc line='. {{ virtualenv_path }}/bin/activate'
   become: no
+
+- name: Add alias to activate virtualenv
+  lineinfile: dest={{ home_path }}/.bashrc line='alias activate=". {{ virtualenv_path }}/bin/activate"'
+  become: no
+
+- name: Allow venv/bin/python to bind port 80
+  command: setcap cap_net_bind_service=ep {{ ansible_python_interpreter }}
+  changed_when: false
