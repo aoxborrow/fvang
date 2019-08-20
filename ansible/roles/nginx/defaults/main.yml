@@ -1,0 +1,5 @@
+---
+
+# nginx default configuration
+nginx_enabled: false
+nginx_use_ssl: false

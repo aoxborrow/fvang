@@ -3,38 +3,38 @@ FVANG
 
 ### Flask-Vagrant-Ansible-Nginx-Gunicorn *Starter Pack*
 
-#### Description
-This is a starter pack for quickly developing a new Flask project locally with Vagrant, which is then easily deployed onto production. It is based on a stock Ubuntu 14.04 base image, and uses Ansible to install and configure the basic services you'll need:
- - A Python virtualenv to house your Flask application and its dependencies
- - Gunicorn to serve your Flask application
- - NGINX to serve static files and proxy to Gunicorn
- - Supervisor to automatically start/restart Gunicorn
+This is a starter pack for quickly developing a new Flask project locally with Vagrant, which is then easily deployed into production with Ansible. It installs and configures all the services you'll need:
+ - **Vagrant** VM based on **Ubuntu 18.04**
+ - **Python 3.6** virtualenv for your **Flask** app and its dependencies
+ - **Nginx** to serve static files and proxy to **Gunicorn**
+ - **Supervisor** to automatically start/restart Gunicorn
+ - **Node.js** for installing front-end components *(optional)*
 
-#### Features
-- fully self-contained, installs Ansible within the VM
-- Ansible playbooks for development and production
-- develop with Flask debug server, then test/deploy with Gunicorn/NGINX
-- easy to add more Ansible roles, e.g. PostgreSQL, MySQL, Redis, etc.
-- activates virtualenv on login
-- installs packages from `requirements.txt`
-- start Gunicorn: `sudo supervisorctl start gunicorn`
-- start NGINX: `sudo service nginx start`
+### Features
+- Disposable environment is fully self-contained within the Vagrant VM
+- Ansible playbooks for both local development and production
+- Develop with Flask dev server, then test/deploy with Gunicorn/Nginx
+- Easily add Ansible galaxy roles *(ansible/requirements.yml)*
+- Activates Python virtualenv on login
+- Installs Python packages from `requirements.txt`
+- Installs Node packages from `package.json`
 
+### Shortcuts
+- `activate` - activate the virtualenv 
+- `deactivate` - deactivate the virtualenv 
+- `make run` - run Flask development server 
+- `make restart` - start/restart Gunicorn & Nginx
+- `make provision-dev` - run playbook for dev *(must deactivate virtualenv)*
+- `make provision-prod` - run playbook production *(must deactivate virtualenv)*
 ----
 
-#### Quick start, developing locally
+### Local Development
 
-0. Install [Vagrant](https://www.vagrantup.com/) ***(Requires 1.8.2+)***
+0. Install [Vagrant](https://www.vagrantup.com/)
 
-0. Clone this repo:
-    ```
-    git clone git@github.com:paste/fvang.git
-    ```
-
-0. Modify your computer's local `/etc/hosts`:
-
-    ```
-    192.168.33.11   fvang.local
+0. Clone this repo as your project name: **(This is important, the project folder name will be used for configuring hostname, etc.)**
+    ```sh
+    git clone git@github.com:paste/fvang.git my-project-name
     ```
 
 0. Build your Vagrant VM:
@@ -50,66 +50,74 @@ This is a starter pack for quickly developing a new Flask project locally with V
 
 0. Start Flask development server:
     ```sh
-    cd fvang
-    python fvang/app.py
+    cd my-project-name
+    make run
+    ```
+
+0. Modify your computer's local `/etc/hosts`:
+
+    ```
+    192.168.33.11   my-project-name.local
     ```
 
 0. Visit your app:
     ```
-    http://fvang.local
+    http://my-project-name.local
+    ```
+
+
+0. **Profit** :heavy_check_mark:
+
+
+----
+
+### In Production
+
+0. You'll need a remote user with `sudo` privileges to run Ansible.
+
+0. Edit the `host_name` and other settings in `ansible/prod.yml` as necessary.
+
+0. Clone your project onto the server in your remote user's home folder, e.g. `~/my-project-name`
+
+0. Install Ansible with the included script:
+    ```sh
+    cd ~/my-project-name
+    sudo ansible/install.sh
+    ```
+
+0. Install Ansible Galaxy roles:
+    ```sh
+    make install-galaxy-roles
+    ```
+
+0. Run the Ansible production playbook:
+    ```sh
+    make provision-prod
     ```
 
 0. **Profit** :heavy_check_mark:
 
-----
-
-#### Changing the project name
-
-0. Clone this repo as your project name:
-    ```sh
-    git clone git@github.com:paste/fvang.git new-project-name
-    ```
-
-0. Rename the app folder:
-    ```
-    fvang -> new-project-name
-    ```
-
-0. Replace any mentions of `fvang` in `Vagrantfile`:
-    ```
-    /home/vagrant/new-project-name
-    ```
-
-0. Configure project name in `ansible/roles/common/vars/main.yml`:
-    ```yaml
-    project_name: new-project-name
-    ```
-
-0. Configure host name in `ansible/roles/nginx/vars/main.yml`:
-    ```yaml
-    host_name: new-project-name.party
-    ```
-
-0. Build your new Vagrant VM:
-
-    ```sh
-    vagrant up
-    ```
 
 ----
 
-#### In production
+### HTTPS in Production
 
-0. Clone your repo onto the server into your user's home folder, e.g. `/home/ubuntu/fvang`. You will probably need to install and configure your Git client to do this.
+0. To use HTTPS you will need an SSL certificate. Get one from Certbot here: https://certbot.eff.org/lets-encrypt/ubuntubionic-nginx
 
-0. Install Ansible or try the included Ansible install script:
-    ```sh
-    ansible/install.sh
+0. Copy the certificate and key to your remote user's home folder. The Nginx configuration expects the files to be named after the `host_name`, like this:  
+    ```
+    ~/fvang.io.crt
+    ~/fvang.io.key
     ```
 
-0. Run the Ansible production playbook. It will automatically start Gunicorn and NGINX:
+0. Update the production playboook to use SSL, in `ansible/prod.yml`:  
+    ```yaml
+    nginx_use_ssl: true
+    ```
+
+0. Re-run the Ansible production playbook:
     ```sh
-    ansible-playbook -c local ansible/prod.yml
+    make provision-prod
     ```
 
 0. **Profit** :heavy_check_mark:

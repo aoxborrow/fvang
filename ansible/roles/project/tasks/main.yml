@@ -1,0 +1,37 @@
+---
+
+- name: Ensure Apt, OpenSSl, and libssl are updated
+  apt:
+    name:
+      - openssl
+      - libssl-dev
+      - libssl-doc
+      - libffi-dev
+      - python-apt
+    update_cache: yes
+    state: latest
+
+- name: Install common server packages
+  apt:
+    name:
+      - build-essential
+      - htop
+      - vim
+      - unzip
+      - curl
+    state: present
+
+- import_role:
+    name: ntp
+
+- import_role:
+    name: python
+
+- import_role:
+    name: nodejs
+
+- import_role:
+    name: gunicorn
+
+- import_role:
+    name: nginx

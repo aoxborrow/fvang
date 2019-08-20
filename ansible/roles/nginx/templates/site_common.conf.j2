@@ -1,0 +1,47 @@
+# this file contains common NGINX configuration for server blocks
+
+# root path for web server
+root {{ public_path }};
+
+access_log /var/log/nginx/{{ project_name }}.access.log;
+error_log /var/log/nginx/{{ project_name }}.error.log info;
+
+keepalive_timeout 5;
+client_max_body_size 15M;
+
+# add gzip compression to most responses
+gzip on;
+gzip_disable "msie6";
+gzip_http_version 1.0;
+gzip_proxied any;
+gzip_vary on;
+gzip_types text/plain text/css application/json application/x-javascript text/javascript text/xml application/xml;
+
+# set headers when proxying to gunicorn
+proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+proxy_set_header X-Forwarded-Proto $scheme;
+proxy_set_header Host $http_host;
+proxy_redirect off;
+proxy_read_timeout 300s;
+
+location /static {
+    # cache static files for 24 hours
+    expires 24h;
+    add_header Pragma public;
+    add_header Cache-Control "public";
+
+    # add CORS header for fonts
+    location ~* \.(eot|ttf|otf|woff|woff2)$ {
+        add_header Access-Control-Allow-Origin *;
+    }
+}
+
+# if static file exists, serve it, otherwise proxy to gunicorn
+location / {
+    try_files $uri @proxy_to_app_server;
+}
+
+# alias for proxying to gunicorn
+location @proxy_to_app_server {
+    proxy_pass http://app_server;
+}

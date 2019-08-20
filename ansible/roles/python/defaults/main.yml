@@ -1,4 +1,7 @@
 ---
 
+# python bin for ansible to use
+ansible_python_interpreter: "/usr/bin/python3.6"
+
 virtualenv_path: "{{ home_path }}/venv"
 requirements_file: "{{ project_path }}/requirements.txt"
